@@ -1,22 +1,32 @@
 :root {
-  --background: 222 47% 11%;
+  /* Deep Space / Neon Theme Palette */
+  --background: 224 71% 4%;     /* Very dark blue, almost black */
   --foreground: 210 40% 98%;
 
-  --primary: 262 83% 58%;
+  /* Primary: Neon Violet */
+  --primary: 263 90% 65%;
   --primary-foreground: 210 40% 98%;
 
-  --secondary: 217 33% 17%;
+  /* Secondary: Deep Slate */
+  --secondary: 217 33% 12%; 
   --secondary-foreground: 210 40% 98%;
 
-  --accent: 316 73% 52%;
+  /* Accent: Neon Pink/Cyan gradients later */
+  --accent: 316 70% 50%;
   --accent-foreground: 210 40% 98%;
 
-  --card: 222 47% 11%; /* Same as bg but maybe slightly lighter/transparent */
+  /* Card / Glass Backgrounds */
+  --card: 224 71% 4%; 
   --card-foreground: 210 40% 98%;
 
   --border: 217 33% 20%;
-  --input: 217 33% 20%;
-  --radius: 0.75rem;
+  --input: 217 33% 15%; /* Slightly darker input bg */
+  --radius: 1rem;       /* More rounded for modern feel */
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 16px;
 }
 
 * {
@@ -25,111 +35,100 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  min-height: 100vh;
   line-height: 1.6;
+  overflow-x: hidden;
+  /* Subtle mesh gradient background */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
+  background-attachment: fixed;
 }
 
+/* --- Global Utilities --- */
+
+/* Glass Panel Utility */
 .glass-panel {
-  background: rgba(30, 41, 59, 0.4); /* Slate 800 with opacity */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.2), 
+    0 2px 4px -1px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
   border-radius: var(--radius);
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.2s;
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+/* Button Reset & Base */
+button {
   cursor: pointer;
   border: none;
-  font-size: 0.95rem;
+  background: none;
+  font-family: inherit;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-  color: hsl(var(--primary-foreground));
-  box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.3);
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px 0 rgba(139, 92, 246, 0.4);
-  filter: brightness(1.1);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: hsl(var(--foreground));
-  border: 1px solid hsl(var(--border));
-}
-
-.btn-ghost:hover {
-  background: hsl(var(--secondary));
-}
-
+/* Form Elements Global Styles */
 input, textarea, select {
   width: 100%;
-  padding: 0.75rem;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid hsl(var(--border));
+  padding: 0.875rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   color: hsl(var(--foreground));
   font-family: inherit;
-  transition: border-color 0.2s;
   font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: hsl(var(--primary));
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2); 
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* Animations */
+/* Animation Keyframes */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--secondary));
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* Markdown Preview */
-.markdown-preview h1 { font-size: 1.8em; font-weight: 700; margin-bottom: 0.5em; color: hsl(var(--primary)); }
-.markdown-preview h2 { font-size: 1.4em; font-weight: 600; margin-top: 1em; margin-bottom: 0.5em; color: hsl(var(--foreground)); }
-.markdown-preview h3 { font-size: 1.2em; font-weight: 600; margin-top: 1em; margin-bottom: 0.5em; }
-.markdown-preview ul, .markdown-preview ol { list-style: disc; margin-left: 1.5em; margin-bottom: 1em; }
-.markdown-preview p { margin-bottom: 0.8em; line-height: 1.7; }
-.markdown-preview strong { color: hsl(var(--primary)); }

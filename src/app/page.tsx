@@ -17,7 +17,7 @@ export default async function Home() {
                 One Source, Two Posts
             </h1>
             <p className={styles.subtitle}>
-                Create "Sellable Note" & "Viral X Post" from a single idea.
+                たった一つのアイデアから、「売れるNote」と「バズるXポスト」を同時生成。
             </p>
         </header>
 

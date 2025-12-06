@@ -22,6 +22,7 @@ model Post {
 
   noteUrl        String?
   xUrl           String?
+  status         String? @default("DRAFT")
   
   // For logging raw inputs or prompts if needed
   rawPrompt      String?

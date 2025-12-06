@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'One Source, Two Posts',
-  description: 'AI-powered content generator for Note and X',
+  description: 'NoteとXのためのAI搭載コンテンツジェネレーター',
 }
 
 export default function RootLayout({
@@ -16,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="background-mesh" />
+        {children}
+      </body>
     </html>
   )
 }
