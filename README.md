@@ -20,6 +20,23 @@
 - **自動化**: Playwright, twitter-api-v2.
 - **バリデーション**: Zod, React Hook Form.
 
+## エンジニアリング・ハイライト (設計思想)
+
+このプロジェクトは、単なるツール開発だけでなく、**「維持管理しやすく、拡張性のあるコードベース」**を目指して設計されています。
+
+1. **責務の分離 (Separation of Concerns)**
+   - **Content-Generation Layer**: LLM生成ロジックを分離し、将来的なモデル切り替え（OpenAI -> Claude等）に容易に対応。
+   - **Publisher Layer**: Note (Browser Automation) と X (API) という全く異なる投稿方式を、統一されたインターフェースで扱えるように抽象化。
+   - **Web Layer**: UIとビジネスロジックをHooksで分離（`useContentGenerator`, `usePosters`）。
+
+2. **型安全性と堅牢性**
+   - **End-to-End Type Safety**: Zodスキーマを単なるバリデーションだけでなく、APIの型定義としても活用。
+   - Frontend (React Hook Form) と Backend (API Route) で同一のスキーマを参照し、整合性を担保。
+
+3. **ローカル完結型のセキュリティ**
+   - クリティカルなCredential（API Key, Login Info）は全てローカル環境（`.env`, Local DB）に閉じて管理。
+   - サーバーレスへのデプロイを行わず、ローカルサーバーとして動作させることで、セキュリティリスクを最小化。
+
 ## 始め方
 
 ### 1. インストール
