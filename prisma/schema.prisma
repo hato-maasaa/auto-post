@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  topic          String
+  targetAudience String?
+  keyPoints      String?
+  tone           String?
+
+  generatedNote  String?
+  generatedX     String?
+
+  noteUrl        String?
+  xUrl           String?
+  
+  // For logging raw inputs or prompts if needed
+  rawPrompt      String?
+}

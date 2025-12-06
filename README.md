@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# One Source, Two Posts
+
+This project is a sophisticated content generation and automation tool designed for freelance engineers to streamline their "One Source, Two Posts" workflow (Note & X).
+
+## Features
+
+- **One Input, Two Outputs**: Generate a long-form Note article and a short/threaded X post from a single topic.
+- **AI-Powered**: Uses LLM (Mocked for demo, ready for OpenAI integration) content generation.
+- **Automated Posting**:
+  - **Note**: Uses Playwright to automate the browser, handling login sessions and drafting.
+  - **X**: Uses Twitter API v2.
+- **Dashboard**: A premium, "Glassmorphism" design dashboard to manage content.
+- **Logging**: Keeps track of all posts in a local SQLite database.
+
+## Tech Stack
+
+- **Frontend**: Next.js 14+ (App Router), TypeScript, Vanilla CSS (CSS Modules), Lucide React.
+- **Backend API**: Next.js API Routes.
+- **Database**: SQLite + Prisma.
+- **Automation**: Playwright, twitter-api-v2.
+- **Validation**: Zod, React Hook Form.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Installation
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+### 2. Environment Setup
+
+The `.env` file has been created. Open it and fill in your keys:
+
+```bash
+DATABASE_URL="file:./dev.db"
+
+# X (Twitter) API Keys (Get from developer.twitter.com)
+TWITTER_APP_KEY=""
+TWITTER_APP_SECRET=""
+TWITTER_ACCESS_TOKEN=""
+TWITTER_ACCESS_SECRET=""
+
+# Note Login (Optional, see below)
+NOTE_EMAIL=""
+NOTE_PASSWORD=""
+```
+
+### 3. Database
+
+Initialize the database (if not already done):
+
+```bash
+npx prisma migrate dev --name init
+```
+
+### 4. Running the App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Note Automation (Playwright)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The tool uses Playwright to interact with Note.com.
+- **First Run**: When you click "Post to Note", a browser window will open. If you are not logged in, you can log in manually in that window. The script attempts to save your session state to `note-storage-state.json`.
+- **Subsequent Runs**: The tool will use the saved session state to post automatically.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/`: Next.js App Router pages and API routes.
+- `components/features/dashboard/`: Main dashboard logic and UI.
+- `lib/`:
+  - `note-poster.ts`: Playwright automation logic.
+  - `prisma.ts`: Database client.
+  - `types.ts`: Zod schemas and types.
+- `prisma/`: Database schema.
