@@ -43,25 +43,25 @@ export default function Dashboard({ history }: DashboardProps) {
         setNoteTitle(result.noteTitle);
         setXPost(result.xPosts.join('\n\n--- THREAD SPLIT ---\n\n')); 
     } else {
-        alert('Failed to generate content.');
+        alert('コンテンツの生成に失敗しました。');
     }
   };
 
   const handlePostX = async () => {
     try {
         await postToX(xPost);
-        alert('Successfully posted to X!');
+        alert('Xへの投稿に成功しました！');
     } catch (e: any) {
-        alert('Failed to post to X: ' + e.message);
+        alert('Xへの投稿に失敗しました: ' + e.message);
     }
   };
   
    const handlePostNote = async () => {
      try {
         await postToNote({ title: noteTitle, body: noteBody }); 
-        alert('Successfully posted to Note!');
+        alert('Noteへの投稿に成功しました！');
     } catch (e: any) {
-         alert('Failed to post to Note: ' + e.message);
+         alert('Noteへの投稿に失敗しました: ' + e.message);
     }
   };
 
@@ -75,29 +75,29 @@ export default function Dashboard({ history }: DashboardProps) {
       >
         <form onSubmit={handleSubmit(onSubmit)} className={styles.inputGroup}>
             <div>
-                <label className={styles.label}>Topic</label>
+                <label className={styles.label}>トピック</label>
                 <input 
                     {...register('topic')} 
-                    placeholder="What should we write about today?"
+                    placeholder="今日は何について書きますか？"
                     disabled={isGenerating}
                 />
                 {errors.topic && <span style={{ color: '#ef4444', fontSize: '0.8rem' }}>{errors.topic.message}</span>}
             </div>
 
             <div>
-                 <label className={styles.label}>Tone</label>
+                 <label className={styles.label}>トーン</label>
                  <select {...register('tone')} disabled={isGenerating} className={styles.select}>
-                    <option value="casual">Casual & Friendly</option>
-                    <option value="professional">Professional & Crisp</option>
-                    <option value="controversial">Bold & Controversial</option>
-                    <option value="storytelling">Storytelling & Emotional</option>
+                    <option value="casual">カジュアル & フレンドリー</option>
+                    <option value="professional">プロフェッショナル & 明快</option>
+                    <option value="controversial">大胆 & 物議を醸す</option>
+                    <option value="storytelling">ストーリーテリング & エモーショナル</option>
                  </select>
             </div>
 
             <div className={styles.buttonGroup}>
                 <button type="submit" disabled={isGenerating} className={styles.generateBtn}>
                     {isGenerating ? <Loader2 className="animate-spin" /> : <Sparkles size={20} />}
-                    {isGenerating ? 'Dreaming up content...' : 'Generate Magic'}
+                    {isGenerating ? 'コンテンツを生成中...' : 'コンテンツを生成'}
                 </button>
             </div>
         </form>
@@ -115,14 +115,14 @@ export default function Dashboard({ history }: DashboardProps) {
                 {/* Note Column */}
                 <div className={styles.resultColumn}>
                     <div className={styles.columnHeader}>
-                        <FileText className={styles.columnIcon} /> Note Article
+                        <FileText className={styles.columnIcon} /> Note記事
                     </div>
                     <div className={`${styles.card} ${styles.previewCard}`}>
                         <div className={styles.inputGroup}>
                             <input 
                                 value={noteTitle} 
                                 onChange={(e) => setNoteTitle(e.target.value)}
-                                placeholder="Article Title"
+                                placeholder="記事のタイトル"
                                 style={{ fontWeight: 'bold', fontSize: '1.2rem' }}
                             />
                             
@@ -131,13 +131,13 @@ export default function Dashboard({ history }: DashboardProps) {
                                     className={`${styles.tabBtn} ${noteTab === 'edit' ? styles.active : ''}`}
                                     onClick={() => setNoteTab('edit')}
                                 >
-                                    write
+                                    編集
                                 </button>
                                 <button 
                                     className={`${styles.tabBtn} ${noteTab === 'preview' ? styles.active : ''}`}
                                     onClick={() => setNoteTab('preview')}
                                 >
-                                    preview
+                                    プレビュー
                                 </button>
                             </div>
 
@@ -160,7 +160,7 @@ export default function Dashboard({ history }: DashboardProps) {
                                 className={`${styles.actionBtn} ${styles.postBtn}`}
                              >
                                 {isPostingNote ? <Loader2 className="animate-spin" /> : <Send size={18} />}
-                                {isPostingNote ? 'Publishing...' : 'Publish to Note'}
+                                {isPostingNote ? '投稿中...' : 'Noteに投稿'}
                             </button>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ export default function Dashboard({ history }: DashboardProps) {
                 {/* X Column */}
                 <div className={styles.resultColumn}>
                     <div className={styles.columnHeader}>
-                        <Twitter className={styles.columnIcon} /> X (Twitter) Post
+                        <Twitter className={styles.columnIcon} /> X (Twitter) ポスト
                     </div>
                      <div className={`${styles.card} ${styles.previewCard}`}>
                         <textarea 
@@ -177,7 +177,7 @@ export default function Dashboard({ history }: DashboardProps) {
                             onChange={(e) => setXPost(e.target.value)}
                             className={styles.textArea}
                             style={{ minHeight: '200px' }}
-                            placeholder="Your viral tweet..."
+                            placeholder="バズるツイート..."
                         />
                          <button 
                             onClick={handlePostX} 
@@ -185,7 +185,7 @@ export default function Dashboard({ history }: DashboardProps) {
                              className={`${styles.actionBtn} ${styles.postBtn}`}
                          >
                             {isPostingX ? <Loader2 className="animate-spin" /> : <Send size={18} />}
-                            {isPostingX ? 'Tweeting...' : 'Post to X'}
+                            {isPostingX ? 'ポスト中...' : 'Xに投稿'}
                         </button>
                      </div>
                 </div>
@@ -201,23 +201,23 @@ export default function Dashboard({ history }: DashboardProps) {
                 transition={{ delay: 0.2, duration: 0.5 }}
             >
                 <div className={styles.historyHeader}>
-                    <History /> Recent Generations
+                    <History /> 最近の生成履歴
                 </div>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Topic</th>
-                                <th>Status</th>
-                                <th>Links</th>
+                                <th>日時</th>
+                                <th>トピック</th>
+                                <th>ステータス</th>
+                                <th>リンク</th>
                             </tr>
                         </thead>
                         <tbody>
                             {history.map(post => (
                                 <tr key={post.id}>
                                     <td>{new Date(post.createdAt).toLocaleDateString()}</td>
-                                    <td style={{ fontWeight: 500, color: 'white' }}>{post.topic || 'No topic'}</td>
+                                    <td style={{ fontWeight: 500, color: 'white' }}>{post.topic || 'トピックなし'}</td>
                                     <td>
                                         <span className={`${styles.statusTag} ${post.status?.includes('PUBLISHED') ? styles.statusPublished : ''}`}>
                                             {post.status}

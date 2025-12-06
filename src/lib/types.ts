@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const ContentGenerationSchema = z.object({
-  topic: z.string().min(1, "Topic is required"),
+  topic: z.string().min(1, "トピックは必須です"),
   targetAudience: z.string().optional(),
   keyPoints: z.string().optional(),
   tone: z.enum(["casual", "polite", "emotional", "professional", "controversial", "storytelling"]).default("casual"),

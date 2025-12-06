@@ -14,7 +14,7 @@ export const useContentGenerator = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error('Generation failed');
+      if (!res.ok) throw new Error('生成に失敗しました');
       return await res.json();
     } catch (e: any) {
       setError(e.message);

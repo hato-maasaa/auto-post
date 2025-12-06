@@ -14,7 +14,7 @@ export const usePosters = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text })
             });
-            if (!res.ok) throw new Error('Failed to post to X');
+            if (!res.ok) throw new Error('Xへの投稿に失敗しました');
             router.refresh(); 
             return true;
         } catch (e) {
@@ -33,7 +33,7 @@ export const usePosters = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, body })
             });
-            if (!res.ok) throw new Error('Failed to post to Note');
+            if (!res.ok) throw new Error('Noteへの投稿に失敗しました');
             router.refresh();
             return true;
         } catch (e) {

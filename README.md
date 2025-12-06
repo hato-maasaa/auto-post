@@ -1,80 +1,80 @@
 # One Source, Two Posts
 
-This project is a sophisticated content generation and automation tool designed for freelance engineers to streamline their "One Source, Two Posts" workflow (Note & X).
+このプロジェクトは、フリーランスエンジニアが「One Source, Two Posts」ワークフロー（NoteとX）を効率化するために設計された、洗練されたコンテンツ生成および自動化ツールです。
 
-## Features
+## 機能
 
-- **One Input, Two Outputs**: Generate a long-form Note article and a short/threaded X post from a single topic.
-- **AI-Powered**: Uses LLM (Mocked for demo, ready for OpenAI integration) content generation.
-- **Automated Posting**:
-  - **Note**: Uses Playwright to automate the browser, handling login sessions and drafting.
-  - **X**: Uses Twitter API v2.
-- **Dashboard**: A premium, "Glassmorphism" design dashboard to manage content.
-- **Logging**: Keeps track of all posts in a local SQLite database.
+- **1つの入力、2つの出力**: 1つのトピックから、長文のNote記事と、短文/スレッド形式のXポストを生成します。
+- **AI搭載**: LLM（デモ用はモック、OpenAI統合準備済み）を使用したコンテンツ生成。
+- **自動投稿**:
+  - **Note**: Playwrightを使用してブラウザを自動操作し、ログインセッションの処理や下書き作成を行います。
+  - **X**: Twitter API v2を使用します。
+- **ダッシュボード**: コンテンツを管理するための、プレミアムな「グラスモーフィズム」デザインのダッシュボード。
+- **ログ機能**: すべての投稿をローカルのSQLiteデータベースに記録します。
 
-## Tech Stack
+## 技術スタック
 
-- **Frontend**: Next.js 14+ (App Router), TypeScript, Vanilla CSS (CSS Modules), Lucide React.
-- **Backend API**: Next.js API Routes.
-- **Database**: SQLite + Prisma.
-- **Automation**: Playwright, twitter-api-v2.
-- **Validation**: Zod, React Hook Form.
+- **フロントエンド**: Next.js 14+ (App Router), TypeScript, Vanilla CSS (CSS Modules), Lucide React.
+- **バックエンド API**: Next.js API Routes.
+- **データベース**: SQLite + Prisma.
+- **自動化**: Playwright, twitter-api-v2.
+- **バリデーション**: Zod, React Hook Form.
 
-## Getting Started
+## 始め方
 
-### 1. Installation
+### 1. インストール
 
 ```bash
 npm install
 npx playwright install chromium
 ```
 
-### 2. Environment Setup
+### 2. 環境設定
 
-The `.env` file has been created. Open it and fill in your keys:
+`.env`ファイルが作成されています。開いてキーを入力してください：
 
 ```bash
 DATABASE_URL="file:./dev.db"
 
-# X (Twitter) API Keys (Get from developer.twitter.com)
+# X (Twitter) API Keys (developer.twitter.com から取得)
 TWITTER_APP_KEY=""
 TWITTER_APP_SECRET=""
 TWITTER_ACCESS_TOKEN=""
 TWITTER_ACCESS_SECRET=""
 
-# Note Login (Optional, see below)
+# Note Login (任意、以下参照)
 NOTE_EMAIL=""
 NOTE_PASSWORD=""
 ```
 
-### 3. Database
+### 3. データベース
 
-Initialize the database (if not already done):
+データベースを初期化します（まだ完了していない場合）：
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-### 4. Running the App
+### 4. アプリの実行
 
 ```bash
 npm run dev
 ```
 
-Visit `http://localhost:3000`.
+`http://localhost:3000` にアクセスしてください。
 
-## Note Automation (Playwright)
+## Note自動化 (Playwright)
 
-The tool uses Playwright to interact with Note.com.
-- **First Run**: When you click "Post to Note", a browser window will open. If you are not logged in, you can log in manually in that window. The script attempts to save your session state to `note-storage-state.json`.
-- **Subsequent Runs**: The tool will use the saved session state to post automatically.
+このツールはPlaywrightを使用してNote.comと対話します。
+- **初回実行時**: "Noteに投稿"をクリックすると、ブラウザウィンドウが開きます。ログインしていない場合は、そのウィンドウで手動でログインできます。スクリプトはセッション状態を `note-storage-state.json` に保存しようとします。
+- **次回以降**: ツールは保存されたセッション状態を使用して自動的に投稿します。
 
-## Project Structure
+## プロジェクト構成
 
-- `app/`: Next.js App Router pages and API routes.
-- `components/features/dashboard/`: Main dashboard logic and UI.
+- `app/`: Next.js App Router ページおよび API ルート。
+- `components/features/dashboard/`: メインダッシュボードのロジックとUI。
 - `lib/`:
-  - `note-poster.ts`: Playwright automation logic.
-  - `prisma.ts`: Database client.
-  - `types.ts`: Zod schemas and types.
-- `prisma/`: Database schema.
+  - `note-poster.ts`: Playwright 自動化ロジック。
+  - `prisma.ts`: データベースクライアント。
+  - `types.ts`: Zod スキーマと型定義。
+- `prisma/`: データベーススキーマ。

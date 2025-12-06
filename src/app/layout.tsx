@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'One Source, Two Posts',
-  description: 'AI-powered content generator for Note and X',
+  description: 'NoteとXのためのAI搭載コンテンツジェネレーター',
 }
 
 export default function RootLayout({
