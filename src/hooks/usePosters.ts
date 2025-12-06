@@ -25,7 +25,7 @@ export const usePosters = () => {
         }
     };
 
-    const postToNote = async (title: string, body: string) => {
+    const postToNote = async ({ title, body }: { title: string; body: string }) => {
         setIsPostingNote(true);
         try {
              const res = await fetch('/api/post/note', {
